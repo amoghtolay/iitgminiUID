@@ -129,7 +129,10 @@ def orQueryOfSameTable( queryList ):
 # the DB itself. ie. word stemming, stripping of punctuation and stop words etc
 # have to be done here only
 def cleanSearchQuery(query):
-    cleanedQuery = query
+    if len(query) < 4:
+        return None
+    else:
+        cleanedQuery = query
     return cleanedQuery
 
 ###############################################################
@@ -141,6 +144,8 @@ def basicSearch():
     # Assume the query comes in string called search
     search = "ma"
     cleanedSearchQuery = cleanSearchQuery( search )
+    if cleanedSearchQuery is None:
+        return dict ( message = T("The search string is too short. Please give a larger string\n")
     queryList = []
     searchableFieldList = findFieldListBasicSearch()
     for table in dbUid:
